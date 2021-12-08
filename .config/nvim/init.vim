@@ -288,7 +288,7 @@ let g:airline_theme = "tokyonight"
 
 set autoindent "New lines inherit the indentation of previous lines
 set expandtab "Convert tabs to spaces
-set shiftwidth=2 "When shifting, indent using four spaces
+set shiftwidth=2 "When shifting, indent using two spaces
 set tabstop=2 "Indent using 4 spaces
 set smarttab " Insert 'tabstop' number of paces with the \t key is pressed
 
@@ -345,4 +345,4 @@ set termguicolors
 set hidden " TextEdit might fail if hidden is not set
 filetype plugin on
 "set pyxversion=3
-let g:python3_host_prog='/usr/bin/python'
+let g:python3_host_prog='/usr/bin/python3'
