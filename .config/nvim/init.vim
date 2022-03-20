@@ -1,4 +1,3 @@
-echo ">^.^<"
 " Sets ";" key to be the leader
 let mapleader=";"
 inoremap ;q <Esc> " Map ';q' to Esc key
@@ -10,31 +9,33 @@ Plug 'preservim/nerdtree'
 Plug 'preservim/nerdcommenter'
 Plug 'ryanoasis/vim-devicons'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 
 Plug 'Yggdroot/indentLine'
 
-" airline is the bottom bar displayed in nvim
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+
+Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' } " Previews hex colors
+
+Plug 'mhartington/oceanic-next'
 
 Plug 'honza/vim-snippets'
 Plug 'airblade/vim-gitgutter'
 Plug 'HerringtonDarkholme/yats.vim'
 
 Plug 'mustache/vim-mustache-handlebars'
+Plug 'chr4/nginx.vim'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'ghifarit53/tokyonight-vim'
+Plug 'pantharshit00/vim-prisma'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+Plug 'tell-k/vim-autopep8' " Requires autopep8, use `pip install --user --upgrade autopep8`
 call plug#end()
-
-map <leader>n :noh<CR>
 
 let g:coc_global_extensions = [
   \ 'coc-pairs',
   \ 'coc-json',
   \ 'coc-emmet',
   \ 'coc-git',
-  \ 'coc-clangd',
   \ 'coc-snippets',
   \ 'coc-prettier',
   \ 'coc-eslint',
@@ -45,13 +46,9 @@ let g:coc_global_extensions = [
   \ 'coc-css',
   \ 'coc-prisma',
   \ 'coc-yaml',
-  \ 'coc-java'
+  \ 'coc-tailwindcss',
+  \ 'coc-pyright'
   \ ]
-
-set clipboard=unnamedplus
-
-" Disable quoate concealing in JSON files
-let g:vim_json_conceal=0
 
 "-- Tabs Shortcuts
 nnoremap tn :tabnew<Space>
@@ -61,9 +58,9 @@ nnoremap th :tabfirst<CR>
 nnoremap tl :tablast<CR>
 
 "-- NerdTree
-" nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTreeToggle<CR>
-" nnoremap <C-f> :NERDTreeFind<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
 
 "--NerdCommenter
 " Create default mappings
@@ -140,8 +137,6 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-let g:coc_snippet_next = '<tab>'
-
 " Use <c-space> to trigger completion.
 if has('nvim')
   inoremap <silent><expr> <c-space> coc#refresh()
@@ -184,11 +179,22 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
 
+function! Format()
+  " silent call CocAction('runCommand', 'editor.action.organizeImport')
+  :execute "normal \<Plug>(coc-format)"
+endfunction
+
+function! FormatImports()
+  silent call CocAction('runCommand', 'editor.action.organizeImport')
+endfunction
+
 " Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-xmap <leader>F  <Plug>(coc-format)
-nmap <leader>F  <Plug>(coc-format)
+xmap <silent> <leader>f  :call FormatImports()<CR>
+nmap <silent> <leader>f  :call FormatImports()<CR>
+" xmap <leader>f  <Plug>(coc-format-selected)
+" nmap <leader>f  <Plug>(coc-format-selected)
+xmap <silent> <leader>F  :call Format()<CR>
+nmap <silent> <leader>F  :call Format()<CR>
 
 augroup mygroup
   autocmd!
@@ -272,15 +278,9 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 
 " -- Hexokinase (Previews Hex Colors)
 let g:Hexokinase_highlighters = [ 'backgroundfull' ]
-" let g:Hexokinase_highlighters = [ 'virtual' ]
-set termguicolors
-let g:tokyonight_style = 'night' " available: night, storm
-" let g:tokyonight_enable_italic = 1
 
-colorscheme tokyonight
-let g:lightline = {'colorscheme' : 'tokyonight'}
-let g:airline_theme = "tokyonight"
-
+" -- Oceanic Next Theme
+colorscheme OceanicNext
 
 " =========================
 " == Indentation Options ==
@@ -288,7 +288,7 @@ let g:airline_theme = "tokyonight"
 
 set autoindent "New lines inherit the indentation of previous lines
 set expandtab "Convert tabs to spaces
-set shiftwidth=2 "When shifting, indent using two spaces
+set shiftwidth=2 "When shifting, indent using four spaces
 set tabstop=2 "Indent using 4 spaces
 set smarttab " Insert 'tabstop' number of paces with the \t key is pressed
 
@@ -345,4 +345,119 @@ set termguicolors
 set hidden " TextEdit might fail if hidden is not set
 filetype plugin on
 "set pyxversion=3
-let g:python3_host_prog='/usr/bin/python3'
+
+" hides highlighting
+map <leader>n :noh<CR>
+
+set foldlevel=999
+let g:vim_json_conceal=0
+set clipboard=unnamedplus
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+" set to 1, nvim will open the preview window after entering the markdown buffer
+" default: 0
+let g:mkdp_auto_start = 0
+
+" set to 1, the nvim will auto close current preview window when change
+" from markdown buffer to another buffer
+" default: 1
+let g:mkdp_auto_close = 1
+
+" set to 1, the vim will refresh markdown when save the buffer or
+" leave from insert mode, default 0 is auto refresh markdown as you edit or
+" move the cursor
+" default: 0
+let g:mkdp_refresh_slow = 0
+
+" set to 1, the MarkdownPreview command can be use for all files,
+" by default it can be use in markdown file
+" default: 0
+let g:mkdp_command_for_global = 0
+
+" set to 1, preview server available to others in your network
+" by default, the server listens on localhost (127.0.0.1)
+" default: 0
+let g:mkdp_open_to_the_world = 0
+
+" use custom IP to open preview page
+" useful when you work in remote vim and preview on local browser
+" more detail see: https://github.com/iamcco/markdown-preview.nvim/pull/9
+" default empty
+let g:mkdp_open_ip = ''
+
+" specify browser to open preview page
+" default: ''
+let g:mkdp_browser = ''
+
+" set to 1, echo preview page url in command line when open preview page
+" default is 0
+let g:mkdp_echo_preview_url = 0
+
+" a custom vim function name to open preview page
+" this function will receive url as param
+" default is empty
+let g:mkdp_browserfunc = ''
+
+" options for markdown render
+" mkit: markdown-it options for render
+" katex: katex options for math
+" uml: markdown-it-plantuml options
+" maid: mermaid options
+" disable_sync_scroll: if disable sync scroll, default 0
+" sync_scroll_type: 'middle', 'top' or 'relative', default value is 'middle'
+"   middle: mean the cursor position alway show at the middle of the preview page
+"   top: mean the vim top viewport alway show at the top of the preview page
+"   relative: mean the cursor position alway show at the relative positon of the preview page
+" hide_yaml_meta: if hide yaml metadata, default is 1
+" sequence_diagrams: js-sequence-diagrams options
+" content_editable: if enable content editable for preview page, default: v:false
+" disable_filename: if disable filename header for preview page, default: 0
+let g:mkdp_preview_options = {
+    \ 'mkit': {},
+    \ 'katex': {},
+    \ 'uml': {},
+    \ 'maid': {},
+    \ 'disable_sync_scroll': 0,
+    \ 'sync_scroll_type': 'middle',
+    \ 'hide_yaml_meta': 1,
+    \ 'sequence_diagrams': {},
+    \ 'flowchart_diagrams': {},
+    \ 'content_editable': v:false,
+    \ 'disable_filename': 0
+    \ }
+
+" use a custom markdown style must be absolute path
+" like '/Users/username/markdown.css' or expand('~/markdown.css')
+let g:mkdp_markdown_css = ''
+
+" use a custom highlight style must absolute path
+" like '/Users/username/highlight.css' or expand('~/highlight.css')
+let g:mkdp_highlight_css = ''
+
+" use a custom port to start server or random for empty
+let g:mkdp_port = ''
+
+" preview page title
+" ${name} will be replace with the file name
+let g:mkdp_page_title = '「${name}」'
+
+" recognized filetypes
+" these filetypes will have MarkdownPreview... commands
+let g:mkdp_filetypes = ['markdown']
+
+" example
+nmap <C-s> <Plug>MarkdownPreview
+nmap <M-s> <Plug>MarkdownPreviewStop
+nmap <C-p> <Plug>MarkdownPreviewToggle
