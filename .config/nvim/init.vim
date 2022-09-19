@@ -15,9 +15,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' } " Previews hex colors
-
-Plug 'mhartington/oceanic-next'
+Plug 'ful1e5/onedark.nvim'
 
 Plug 'honza/vim-snippets'
 Plug 'airblade/vim-gitgutter'
@@ -27,7 +25,7 @@ Plug 'mustache/vim-mustache-handlebars'
 Plug 'chr4/nginx.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'pantharshit00/vim-prisma'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install'  }
 Plug 'tell-k/vim-autopep8' " Requires autopep8, use `pip install --user --upgrade autopep8`
 call plug#end()
 
@@ -279,8 +277,7 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 " -- Hexokinase (Previews Hex Colors)
 let g:Hexokinase_highlighters = [ 'backgroundfull' ]
 
-" -- Oceanic Next Theme
-colorscheme OceanicNext
+colorscheme onedark
 
 " =========================
 " == Indentation Options ==

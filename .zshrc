@@ -1,4 +1,3 @@
-fastfetch
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -109,12 +108,10 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias pm="pulsemixer"
 alias ivim="nvim /home/john/.config/nvim/init.vim"
 alias ys="yarn start"
 alias zshrc="nvim /home/john/.zshrc"
 alias gs="git status"
-alias pm="pulsemixer"
 alias dcu="docker-compose up --build"
 alias dcd="docker-compose down"
 alias dps="docker ps"
@@ -122,19 +119,11 @@ alias de="docker exec -it"
 alias dka="docker kill \$(docker ps -q)"
 alias pg="sudo -iu postgres"
 alias ports="sudo netstat -tulpn | grep LISTEN"
-alias bt="bluetoothctl -- connect 94:DB:56:A2:F9:17"
-alias bton="bluetoothctl -- power on"
-alias btoff="bluetoothctl -- power off"
 alias ls="ls -lhF --color"
 alias lh="ls -lhd .??*"
-alias evpn="expressvpn"
 alias pip="pip3"
 alias python="python3"
 alias free="free -h" #human readable
-alias vc="expressvpn connect"
-alias vd="expressvpn disconnect"
-alias vs="expressvpn status"
-
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
