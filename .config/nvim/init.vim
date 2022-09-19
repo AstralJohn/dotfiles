@@ -15,7 +15,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-Plug 'ful1e5/onedark.nvim'
+Plug 'navarasu/onedark.nvim'
 
 Plug 'honza/vim-snippets'
 Plug 'airblade/vim-gitgutter'
@@ -277,6 +277,10 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 " -- Hexokinase (Previews Hex Colors)
 let g:Hexokinase_highlighters = [ 'backgroundfull' ]
 
+" dark|darker|cool|deep|warm|warmer|light
+let g:onedark_config = {
+    \ 'style': 'darker',
+\}
 colorscheme onedark
 
 " =========================
