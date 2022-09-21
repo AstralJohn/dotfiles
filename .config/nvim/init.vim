@@ -45,7 +45,8 @@ let g:coc_global_extensions = [
   \ 'coc-prisma',
   \ 'coc-yaml',
   \ 'coc-tailwindcss',
-  \ 'coc-pyright'
+  \ 'coc-pyright',
+  \ 'coc-vetur'
   \ ]
 
 "-- Tabs Shortcuts
@@ -58,7 +59,7 @@ nnoremap tl :tablast<CR>
 "-- NerdTree
 nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
+nnoremap <leader>d :NERDTreeFind<CR>
 
 "--NerdCommenter
 " Create default mappings
@@ -166,9 +167,24 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
 
+
+function! Format()
+  :call FormatImports()
+  :execute "normal \<Plug>(coc-format)"
+  :CocCommand eslint.executeAutofix
+endfunction
+
+function! FormatImports()
+  silent call CocAction('runCommand', 'editor.action.organizeImport')
+endfunction
+
 " Formatting selected code.
+"xmap <silent> <leader>f  :call FormatImports()<CR>
+"nmap <silent> <leader>f  :call FormatImports()<CR>
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
+xmap <silent> <leader>F  :call Format()<CR>
+nmap <silent> <leader>F  :call Format()<CR>
 
 augroup mygroup
   autocmd!
