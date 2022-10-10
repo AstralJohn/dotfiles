@@ -12,12 +12,12 @@ Plug 'christoomey/vim-tmux-navigator'
 
 Plug 'Yggdroot/indentLine'
 
+Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
+
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' } " Previews hex colors
-
-Plug 'mhartington/oceanic-next'
+Plug 'navarasu/onedark.nvim'
 
 Plug 'honza/vim-snippets'
 Plug 'airblade/vim-gitgutter'
@@ -27,7 +27,7 @@ Plug 'mustache/vim-mustache-handlebars'
 Plug 'chr4/nginx.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'pantharshit00/vim-prisma'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install'  }
 Plug 'tell-k/vim-autopep8' " Requires autopep8, use `pip install --user --upgrade autopep8`
 call plug#end()
 
@@ -47,7 +47,8 @@ let g:coc_global_extensions = [
   \ 'coc-prisma',
   \ 'coc-yaml',
   \ 'coc-tailwindcss',
-  \ 'coc-pyright'
+  \ 'coc-pyright',
+  \ 'coc-vetur'
   \ ]
 
 "-- Tabs Shortcuts
@@ -60,7 +61,7 @@ nnoremap tl :tablast<CR>
 "-- NerdTree
 nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
+nnoremap <leader>d :NERDTreeFind<CR>
 
 "--NerdCommenter
 " Create default mappings
@@ -104,35 +105,31 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 set nobackup
 set nowritebackup
 
-" Give more space for displaying messages.
-" set cmdheight=2
-
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
 set updatetime=300
 
-" Don't pass messages to |ins-completion-menu|.
-set shortmess+=c
-
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
-if has("nvim-0.5.0") || has("patch-8.1.1564")
-  " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
-else
-  set signcolumn=yes
-endif
+set signcolumn=yes
 
 " Use tab for trigger completion with characters ahead and navigate.
+" NOTE: There's always complete item selected by default, you may want to enable
+" no select by `"suggest.noselect": true` in your configuration file.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-function! s:check_back_space() abort
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
@@ -143,11 +140,6 @@ if has('nvim')
 else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
-
-" Make <CR> auto-select the first completion item and notify coc.nvim to
-" format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
@@ -161,15 +153,13 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+nnoremap <silent> K :call ShowDocumentation()<CR>
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
     call CocActionAsync('doHover')
   else
-    execute '!' . &keywordprg . " " . expand('<cword>')
+    call feedkeys('K', 'in')
   endif
 endfunction
 
@@ -179,8 +169,9 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
 
+
 function! Format()
-  " silent call CocAction('runCommand', 'editor.action.organizeImport')
+  :call FormatImports()
   :execute "normal \<Plug>(coc-format)"
 endfunction
 
@@ -189,12 +180,21 @@ function! FormatImports()
 endfunction
 
 " Formatting selected code.
-xmap <silent> <leader>f  :call FormatImports()<CR>
-nmap <silent> <leader>f  :call FormatImports()<CR>
+  
+" Already being called in the Format() function
 " xmap <leader>f  <Plug>(coc-format-selected)
 " nmap <leader>f  <Plug>(coc-format-selected)
-xmap <silent> <leader>F  :call Format()<CR>
-nmap <silent> <leader>F  :call Format()<CR>
+xmap <silent> <leader>e  :CocCommand eslint.executeAutofix<CR>
+nmap <silent> <leader>e  :CocCommand eslint.executeAutofix<CR>
+xmap <silent> <leader>f  :call Format()<CR>
+nmap <silent> <leader>f  :call Format()<CR>
+" autocmd BufWritePost *js :call Format()
+" autocmd BufWritePost *html :call Format()
+" autocmd BufWritePost *vue :call Format()
+" autocmd BufWritePost *jsx :call Format()
+" autocmd BufWritePost *ts :call Format()
+" autocmd BufWritePost *tsx :call Format()
+" autocmd BufWritePost *json :call Format()
 
 augroup mygroup
   autocmd!
@@ -213,6 +213,9 @@ nmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>ac  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Run the Code Lens action on the current line.
+nmap <leader>cl  <Plug>(coc-codelens-action)
 
 " Map function and class text objects
 " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
@@ -241,13 +244,13 @@ nmap <silent> <C-s> <Plug>(coc-range-select)
 xmap <silent> <C-s> <Plug>(coc-range-select)
 
 " Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocAction('format')
+command! -nargs=0 Format :call CocActionAsync('format')
 
 " Add `:Fold` command to fold current buffer.
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
 
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
@@ -279,8 +282,11 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 " -- Hexokinase (Previews Hex Colors)
 let g:Hexokinase_highlighters = [ 'backgroundfull' ]
 
-" -- Oceanic Next Theme
-colorscheme OceanicNext
+" dark|darker|cool|deep|warm|warmer|light
+let g:onedark_config = {
+    \ 'style': 'darker',
+\}
+colorscheme onedark
 
 " =========================
 " == Indentation Options ==
