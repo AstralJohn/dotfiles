@@ -109,21 +109,13 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ivim="nvim /home/john/.config/nvim/init.vim"
-alias ys="yarn start"
 alias zshrc="nvim /home/john/.zshrc"
 alias gs="git status"
-alias dcu="docker-compose up --build"
-alias dcd="docker-compose down"
-alias dps="docker ps"
-alias de="docker exec -it"
-alias dka="docker kill \$(docker ps -q)"
 alias pg="sudo -iu postgres"
-alias ports="sudo netstat -tulpn | grep LISTEN"
 alias ls="ls -lhF --color"
 alias lh="ls -lhd .??*"
 alias pip="pip3"
 alias python="python3"
-alias free="free -h" #human readable
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
