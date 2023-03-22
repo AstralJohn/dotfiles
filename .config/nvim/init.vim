@@ -29,6 +29,8 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'pantharshit00/vim-prisma'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install'  }
 Plug 'tell-k/vim-autopep8' " Requires autopep8, use `pip install --user --upgrade autopep8`
+Plug 'stephenway/postcss.vim'
+Plug 'posva/vim-vue'
 call plug#end()
 
 let g:coc_global_extensions = [
@@ -47,9 +49,17 @@ let g:coc_global_extensions = [
   \ 'coc-prisma',
   \ 'coc-yaml',
   \ 'coc-tailwindcss',
-  \ 'coc-pyright',
-  \ 'coc-vetur'
+  \ 'coc-jedi',
+  \ '@yaegassy/coc-volar',
+  \ '@yaegassy/coc-volar-tools',
+  \ 'coc-deno'
   \ ]
+" https://www.youtube.com/watch?v=zPoyZASNBDg https://www.youtube.com/@devhulk
+
+" autocmd VimEnter * CocCommand volar.action.splitEditors
+
+hi EndOfBuffer ctermbg=NONE ctermfg=200 cterm=NONE
+hi Normal ctermbg=NONE ctermfg=200 cterm=NONE
 
 "-- Tabs Shortcuts
 nnoremap tn :tabnew<Space>
@@ -172,7 +182,8 @@ nmap <leader>rn <Plug>(coc-rename)
 
 function! Format()
   :call FormatImports()
-  :execute "normal \<Plug>(coc-format)"
+  " :execute "normal \<Plug>(coc-format)"
+  :CocCommand prettier.formatFile
 endfunction
 
 function! FormatImports()
@@ -188,13 +199,15 @@ xmap <silent> <leader>e  :CocCommand eslint.executeAutofix<CR>
 nmap <silent> <leader>e  :CocCommand eslint.executeAutofix<CR>
 xmap <silent> <leader>f  :call Format()<CR>
 nmap <silent> <leader>f  :call Format()<CR>
-" autocmd BufWritePost *js :call Format()
-" autocmd BufWritePost *html :call Format()
-" autocmd BufWritePost *vue :call Format()
-" autocmd BufWritePost *jsx :call Format()
-" autocmd BufWritePost *ts :call Format()
-" autocmd BufWritePost *tsx :call Format()
-" autocmd BufWritePost *json :call Format()
+xmap <silent> <leader>s  :CocCommand volar.action.splitEditors<CR>
+nmap <silent> <leader>s  :CocCommand volar.action.splitEditors<CR>
+" autocmd BufWritePost *js :execute "normal \<Plug>(coc-format)"
+" autocmd BufWritePost *html :execute "normal \<Plug>(coc-format)"
+" autocmd BufWritePost *vue :execute "normal \<Plug>(coc-format)"
+" autocmd BufWritePost *vue :execute "normal \<Plug>(coc-format)"
+" autocmd BufWritePost *ts :execute "normal \<Plug>(coc-format)"
+" autocmd BufWritePost *tsx :execute "normal \<Plug>(coc-format)"
+" autocmd BufWritePost *json :execute "normal \<Plug>(coc-format)"
 
 augroup mygroup
   autocmd!
@@ -337,11 +350,12 @@ set noerrorbells " Disable beep on errors
 set foldmethod=manual
 map <leader>m :set foldmethod=manual<CR>
 map <leader>i :set foldmethod=indent<CR>
-augroup remember_folds
-  autocmd!
-  autocmd BufWinLeave * mkview
-  autocmd BufWinEnter * silent! loadview
-augroup END
+" save folds
+" augroup remember_folds
+"   autocmd!
+"   autocmd BufWinLeave * mkview
+"   autocmd BufWinEnter * silent! loadview
+" augroup END
 
 " ===========================
 " == Miscellaneous Options ==

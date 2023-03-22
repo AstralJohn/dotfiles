@@ -1,0 +1,84 @@
+{
+  "coc-json|global": {
+    "json-schema-cache": {
+      "https://json.schemastore.org/tsconfig.json": {
+        "etag": "\"0948526ed1ad91:0\"",
+        "fileName": "a28507e42e8bfd5fba830538461d5db3.schema.json",
+        "updateTime": 1674422703845
+      },
+      "http://json.schemastore.org/prettierrc": {
+        "etag": "\"80e08ca9849bd81:0\"",
+        "fileName": "b2ed7a7b6c79e58baf94e4ce160282de.schema.json",
+        "updateTime": 1674444227164
+      },
+      "https://json.schemastore.org/package.json": {
+        "etag": "\"032a04c70f0d81:0\"",
+        "fileName": "473f72b44c2905902dfbcc770aab7f7a.schema.json",
+        "updateTime": 1674444227248
+      },
+      "https://json.schemastore.org/jscpd.json": {
+        "etag": "\"80bec5ba1984d81:0\"",
+        "fileName": "22bfc1ab1ff56aae62322f6ce45dab5a.schema.json",
+        "updateTime": 1674444227504
+      },
+      "https://json.schemastore.org/semantic-release.json": {
+        "etag": "\"808cdec3a9a4d81:0\"",
+        "fileName": "fbc95702ba6eddb3e2de4f52e31ca82a.schema.json",
+        "updateTime": 1674444227501
+      },
+      "https://json.schemastore.org/ava.json": {
+        "etag": "\"80cdbd40989d91:0\"",
+        "fileName": "635f57185b22bce9d3a56c68f5da4ad7.schema.json",
+        "updateTime": 1674444227504
+      },
+      "https://json.schemastore.org/stylelintrc.json": {
+        "etag": "\"80e08ca9849bd81:0\"",
+        "fileName": "000bfbdd14d2fb8ec5b0d59bec32ef98.schema.json",
+        "updateTime": 1674444227506
+      },
+      "https://json.schemastore.org/prettierrc.json": {
+        "etag": "\"80e08ca9849bd81:0\"",
+        "fileName": "ea5ab10330a3ab77dfd6d00a735b0925.schema.json",
+        "updateTime": 1674444227510
+      },
+      "https://json.schemastore.org/eslintrc.json": {
+        "etag": "\"09c10cf5f2bd91:0\"",
+        "fileName": "c5064f140d4cfdbf4d6fbe68f68abbb1.schema.json",
+        "updateTime": 1674444227512
+      },
+      "https://raw.githubusercontent.com/denoland/deno/main/cli/schemas/config-file.v1.json": {
+        "etag": "W/\"201e7eaad65dfc084f852dd7c193bcbcf2300a457f039933ab1836de5be3f764\"",
+        "fileName": "567f41445648f9f4a1491eb61d266583.schema.json",
+        "updateTime": 1674443711437
+      },
+      "https://raw.githubusercontent.com/denoland/vscode_deno/main/schemas/import_map.schema.json": {
+        "etag": "W/\"f1322d7d9e9801604489068422d4cb2dc35eb83f0920d02cd0a5aa89406abe22\"",
+        "fileName": "9476d58ecbbb49e838c3d49b33131d1b.schema.json",
+        "updateTime": 1674443187322
+      },
+      "https://json.schemastore.org/importmap.json": {
+        "etag": "\"53b5bcfe316ad81:0\"",
+        "fileName": "e5c702c76db95e03a8178160b564a346.schema.json",
+        "updateTime": 1674425688850
+      }
+    }
+  },
+  "@yaegassy/coc-volar|/home/john/test": {
+    "coc-volar-ts-server-path": "/home/john/.config/coc/extensions/node_modules/@yaegassy/coc-volar/node_modules/typescript/lib"
+  },
+  "@yaegassy/coc-volar|/home/john/client": {
+    "coc-volar-ts-server-path": "/home/john/.config/coc/extensions/node_modules/@yaegassy/coc-volar/node_modules/typescript/lib"
+  },
+  "@yaegassy/coc-volar|/home/john/client/src": {
+    "coc-volar-ts-server-path": "/home/john/.config/coc/extensions/node_modules/@yaegassy/coc-volar/node_modules/typescript/lib"
+  },
+  "@yaegassy/coc-volar|/home/john/projects/AstralReader/client": {
+    "coc-volar-ts-server-path": "/home/john/.config/coc/extensions/node_modules/@yaegassy/coc-volar/node_modules/typescript/lib"
+  },
+  "@yaegassy/coc-volar|/home/john/projects/AstralReader/server": {
+    "coc-volar-ts-server-path": "/home/john/.config/coc/extensions/node_modules/@yaegassy/coc-volar/node_modules/typescript/lib"
+  },
+  "@yaegassy/coc-volar|/home/john/projects/AstralReader": {
+    "coc-volar-ts-server-path": "/home/john/.config/coc/extensions/node_modules/@yaegassy/coc-volar/node_modules/typescript/lib"
+  }
+}

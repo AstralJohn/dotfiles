@@ -83,6 +83,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(git yarn z zsh-autosuggestions zsh-syntax-highlighting docker)
 
 source $ZSH/oh-my-zsh.sh
+source /usr/share/nvm/init-nvm.sh
 
 # User configuration
 
@@ -109,7 +110,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias pm="pulsemixer"
 alias ivim="nvim /home/john/.config/nvim/init.vim"
 alias ys="yarn start"
 alias zshrc="nvim /home/john/.zshrc"
@@ -120,21 +120,22 @@ alias dcd="docker-compose down"
 alias dps="docker ps"
 alias de="docker exec -it"
 alias dka="docker kill \$(docker ps -q)"
-alias pg="sudo -iu postgres"
 alias ports="sudo netstat -tulpn | grep LISTEN"
 alias bt="bluetoothctl -- connect 94:DB:56:A2:F9:17"
 alias bton="bluetoothctl -- power on"
 alias btoff="bluetoothctl -- power off"
 alias ls="ls -lhF --color"
 alias lh="ls -lhd .??*"
-alias evpn="expressvpn"
 alias pip="pip3"
 alias python="python3"
 alias free="free -h" #human readable
-alias vc="expressvpn connect"
-alias vd="expressvpn disconnect"
-alias vs="expressvpn status"
-
+alias qconf="nvim /home/john/.config/qtile/config.py"
+alias desk="/home/john/.screenlayout/desk.sh"
+alias laptop="/home/john/.screenlayout/laptop.sh"
+alias cp="rsync --progress -ah"
+alias fb="filebot --db TheTVDB --format \"{n} - {s00e00} - {t}\" -rename"
+alias fba="filebot --db TheTVDB --format \"{n} - {s00e00} - {t}\" -rename ./**/*"
+# alias tmux="TERM=screen-256color-bce tmux"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -142,3 +143,19 @@ alias vs="expressvpn status"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/usr/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/usr/etc/profile.d/conda.sh" ]; then
+        . "/usr/etc/profile.d/conda.sh"
+    else
+        export PATH="/usr/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
