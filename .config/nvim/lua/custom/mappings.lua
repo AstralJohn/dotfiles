@@ -1,98 +1,41 @@
----@type MappingsTable
-local M = {}
+local map = vim.keymap.set
 
-M.nvterm = {
-  t = {
-    -- toggle in terminal mode
-    ["<leader>t"] = {
-      function()
-        require("nvterm.terminal").toggle "float"
-      end,
-      "Toggle floating term",
-    },
+map("n", "<leader>n", ":noh<CR>", { silent = true, noremap = true, desc = "Map ;n to :noh" })
 
-    ["<leader>h"] = {
-      function()
-        require("nvterm.terminal").toggle "horizontal"
-      end,
-      "Toggle horizontal term",
-    },
+map("t", "<leader>t", function()
+	require("nvterm.terminal").toggle("float")
+end, { desc = "Toggle floating term" })
 
-    ["<leader>v"] = {
-      function()
-        require("nvterm.terminal").toggle "vertical"
-      end,
-      "Toggle vertical term",
-    },
-  },
+map("t", "<leader>h", function()
+	require("nvterm.terminal").toggle("horizontal")
+end, { desc = "Toggle horizontal term" })
 
-  n = {
-    ["<leader>n"] = { ":noh<CR>", "Map ;n to :noh", opts = { noremap = true, silent = true } },
-    -- toggle in normal mode
-    ["<leader>t"] = {
-      function()
-        require("nvterm.terminal").toggle "float"
-      end,
-      "Toggle floating term",
-    },
+map("t", "<leader>v", function()
+	require("nvterm.terminal").toggle("vertical")
+end, { desc = "Toggle vertical term" })
 
-    ["<leader>h"] = {
-      function()
-        require("nvterm.terminal").toggle "horizontal"
-      end,
-      "Toggle horizontal term",
-    },
+map("n", "<leader>t", function()
+	require("nvterm.terminal").toggle("float")
+end, { desc = "Toggle floating term" })
 
-    ["<leader>v"] = {
-      function()
-        require("nvterm.terminal").toggle "vertical"
-      end,
-      "Toggle vertical term",
-    },
-  },
-}
+map("n", "<leader>h", function()
+	require("nvterm.terminal").toggle("horizontal")
+end, { desc = "Toggle horizontal term" })
 
-M.general = {
-  i = {
-    ["<leader>q"] = { "<Esc>", "Map ;q to escape", opts = { noremap = true, silent = true } },
-  },
+map("n", "<leader>v", function()
+	require("nvterm.terminal").toggle("vertical")
+end, { desc = "Toggle vertical term" })
 
-  n = {
-    ["<C-s>"] = { ":MarkdownPreview<CR>", "Markdown preview with ctrl-s", opts = { noremap = true, silent = true } },
-    ["<leader>q"] = { "<Esc>", "Map ;q to escape", opts = { noremap = true, silent = true } },
+map("n", "<C-s>", ":MarkdownPreview<CR>", { noremap = true, silent = true, desc = "Markdown preview with ctrl-s" })
 
-    --  format with conform
-    ["<leader>fm"] = {
-      function()
-        require("conform").format()
-      end,
-      "formatting",
-    },
-  },
-  v = {
-    [">"] = { ">gv", "indent" },
-  },
-}
+map("n", "<leader>fm", function()
+	require("conform").format()
+end, { desc = "Formatting" })
 
-M.comment = {
-  -- toggle comment in both modes
-  n = {
-    ["<leader>cc"] = {
-      function()
-        require("Comment.api").toggle.linewise.current()
-      end,
-      "Toggle comment",
-    },
-  },
+map("n", "<leader>cc", function()
+	require("Comment.api").toggle.linewise.current()
+end, { desc = "Toggle Comment" })
 
-  v = {
-    ["<leader>cc"] = {
-      "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
-      "Toggle comment",
-    },
-  },
-}
-
--- more keybinds!
-
-return M
+map("v", "<leader>cc", function()
+	require("Comment.api").toggle.linewise.current()
+end, { desc = "Toggle Comment" })

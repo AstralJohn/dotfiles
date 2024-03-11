@@ -1,6 +1,6 @@
+
 local overrides = require("custom.configs.overrides")
 
----@type NvPluginSpec[]
 local plugins = {
 
   -- Override plugin definition options
@@ -8,7 +8,7 @@ local plugins = {
   {
     "neovim/nvim-lspconfig",
     config = function()
-      require "plugins.configs.lspconfig"
+      require "nvchad.configs.lspconfig"
       require "custom.configs.lspconfig"
     end, -- Override to setup mason-lspconfig
   },
