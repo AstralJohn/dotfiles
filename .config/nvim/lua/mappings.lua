@@ -10,6 +10,6 @@ map("n", "<leader>fm", function()
 	require("conform").format()
 end, { desc = "File Format with conform" })
 
-map("i", "jk", "<ESC>", { desc = "Escape insert mode" })
+map("i", "<leader>q", "<ESC>", { desc = "Escape insert mode" })
 
 require("custom.mappings")
